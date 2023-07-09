@@ -5,42 +5,101 @@ import Button from "@mui/material/Button";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 
 function App() {
   return (
-    <>
-      <header>
+    <Box
+      component="div"
+      sx={{
+        margin: "0 30px 30px",
+      }}
+    >
+      <Box
+        component="header"
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "30px",
+        }}
+      >
         <h1>Marvelous v2.0</h1>
         <a href="#">Delete all tasks</a>
-      </header>
-      <br />
-      <br />
+      </Box>
 
-      <TextField id="outlined-basic" variant="outlined" />
+      <Container
+        fixed
+        sx={{
+          maxWidth: "100% !important",
+          width: "100%",
+          height: "",
+          padding: "0 !important",
+          margin: "0 0 30px",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            sx={{
+              ".MuiInputBase-input": {
+                padding: "8px",
+              },
+            }}
+          />
+          <Button
+            variant="contained"
+            sx={{ marginLeft: "8px", textTransform: "capitalize" }}
+          >
+            Add
+          </Button>
+        </div>
+        <div>
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            placeholder="Search..."
+            sx={{
+              ".MuiInputBase-input": {
+                padding: "8px",
+              },
+            }}
+          />
+        </div>
+      </Container>
 
-      <Button variant="contained">Add</Button>
-      <br />
+      <Container
+        fixed
+        sx={{
+          maxWidth: "100% !important",
+          padding: "0 !important",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box component="div" sx={{ width: "47%" }}>
+          <h3>To Do</h3>
+          <hr />
+          <FormGroup>
+            <FormControlLabel control={<Checkbox />} label="Task 1" />
+            <FormControlLabel control={<Checkbox />} label="Task 2" />
+          </FormGroup>
+        </Box>
 
-      <TextField
-        id="outlined-basic"
-        variant="outlined"
-        placeholder="Search..."
-      />
-
-      <h3>To Do</h3>
-      <hr />
-      <FormGroup>
-        <FormControlLabel control={<Checkbox />} label="Task 1" />
-        <FormControlLabel control={<Checkbox />} label="Task 2" />
-      </FormGroup>
-
-      <h3>Done</h3>
-      <hr />
-      <FormGroup>
-        <FormControlLabel control={<Checkbox checked />} label="Task 3" />
-        <FormControlLabel control={<Checkbox checked />} label="Task 4" />
-      </FormGroup>
-    </>
+        <Box component="div" sx={{ width: "47%" }}>
+          <h3>Done</h3>
+          <hr />
+          <FormGroup>
+            <FormControlLabel control={<Checkbox checked />} label="Task 3" />
+            <FormControlLabel control={<Checkbox checked />} label="Task 4" />
+          </FormGroup>
+        </Box>
+      </Container>
+    </Box>
   );
 }
 
