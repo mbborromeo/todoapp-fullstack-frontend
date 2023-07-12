@@ -62,16 +62,19 @@ function App() {
     if (addField) {
       postServerData(`http://localhost:5000/api/todos?task=${addField}`);
       setAddField("");
-      // getDone();
-      // getToDos();
+      updateLists();
     }
   };
 
-  useEffect(() => {
-    // fetch API data initially
+  const updateLists = useCallback(() => {
     getToDos().then((response) => setToDoList(response));
     getDone().then((response) => setDoneList(response));
-  }, [getToDos, getDone]); // , toDoList, doneList
+  }, [getToDos, getDone]);
+
+  useEffect(() => {
+    // fetch API data initially
+    updateLists();
+  }, [updateLists]); // , toDoList, doneList
 
   return (
     <Box
