@@ -27,6 +27,7 @@ function App() {
   const [searchField, setSearchField] = useState("");
   const [openAlert, setOpenAlert] = useState(false);
   const [toDoList, setToDoList] = useState([]);
+  const [doneList, setDoneList] = useState([]);
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -57,11 +58,19 @@ function App() {
     );
   }, [searchField]);
 
+  const getDone = useCallback(() => {
+    console.log("getDone items");
+    return getServerData(
+      `http://localhost:5000/api/todos/done?searchTerm=${searchField}`
+    );
+  }, [searchField]);
+
   useEffect(() => {
+    console.log("useEffect toDoList", toDoList);
+
     // fetch API data initially
     getToDos().then((response) => setToDoList(response));
-
-    console.log("useEffect toDoList", toDoList);
+    getDone().then((response) => setDoneList(response));
   }, [getToDos, toDoList]);
 
   return (
@@ -174,8 +183,6 @@ function App() {
           <h3>To Do</h3>
           <hr />
           <FormGroup>
-            {/* <FormControlLabel control={<Checkbox />} label="Task 1" />
-            <FormControlLabel control={<Checkbox />} label="Task 2" /> */}
             {toDoList &&
               toDoList.length > 0 &&
               toDoList.map((item, i) => (
@@ -192,8 +199,15 @@ function App() {
           <h3>Done</h3>
           <hr />
           <FormGroup>
-            <FormControlLabel control={<Checkbox checked />} label="Task 3" />
-            <FormControlLabel control={<Checkbox checked />} label="Task 4" />
+            {doneList &&
+              doneList.length > 0 &&
+              doneList.map((item, i) => (
+                <FormControlLabel
+                  key={i}
+                  control={<Checkbox checked />}
+                  label={item.content}
+                />
+              ))}
           </FormGroup>
         </Box>
       </Container>
