@@ -20,6 +20,7 @@ import {
   getServerData,
   postServerData,
   deleteAllServerData,
+  putServerData,
 } from "../helper/helper";
 
 function App() {
@@ -38,8 +39,12 @@ function App() {
   };
 
   const handleChangeCheckbox = (element) => {
-    console.log("element clicked is:", element);
-    console.log("checkbox _id clicked is:", element.getAttribute("data-id"));
+    // console.log("checkbox _id clicked is:", element.getAttribute("data-id"));
+    // console.log("checkbox _id clicked is:", element["data-id"]);
+    console.log("checkbox _id clicked is:", element["_id"]);
+
+    const taskId = element["_id"];
+    putToDo(taskId);
   };
 
   const handleChangeSearch = (text) => {
@@ -57,10 +62,17 @@ function App() {
 
   const addToDo = () => {
     if (addField) {
-      postServerData(`http://localhost:5000/api/todos?task=${addField}`);
-      setAddField("");
-      updateLists();
+      postServerData(`http://localhost:5000/api/todos?task=${addField}`).then(
+        () => {
+          setAddField("");
+          updateLists();
+        }
+      );
     }
+  };
+
+  const putToDo = (id) => {
+    putServerData(`http://localhost:5000/api/todos/${id}`).then(updateLists());
   };
 
   const updateLists = useCallback(() => {
@@ -200,7 +212,7 @@ function App() {
                   control={
                     <Checkbox
                       onChange={(e) => {
-                        handleChangeCheckbox(e.target);
+                        handleChangeCheckbox(item);
                       }}
                       data-id={item._id}
                     />
@@ -223,7 +235,9 @@ function App() {
                   control={
                     <Checkbox
                       checked
-                      onChange={handleChangeCheckbox}
+                      onChange={(e) => {
+                        handleChangeCheckbox(item);
+                      }}
                       data-id={item._id}
                     />
                   }
