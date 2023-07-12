@@ -2,6 +2,7 @@ import "./App.css";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -9,6 +10,15 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
 function App() {
+  /* functions to call backend API */
+  const addToDo = () => {
+    console.log("click add to do");
+  };
+
+  const deleteAllTasks = () => {
+    console.log("click delete all tasks");
+  };
+
   return (
     <Box
       component="div"
@@ -26,7 +36,9 @@ function App() {
         }}
       >
         <h1>Marvelous v2.0</h1>
-        <a href="#">Delete all tasks</a>
+        <Link component="button" variant="text" onClick={deleteAllTasks}>
+          Delete all tasks
+        </Link>
       </Box>
 
       <Container
@@ -54,6 +66,7 @@ function App() {
           <Button
             variant="contained"
             sx={{ marginLeft: "8px", textTransform: "capitalize" }}
+            onClick={addToDo}
           >
             Add
           </Button>
