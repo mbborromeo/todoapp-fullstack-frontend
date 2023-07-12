@@ -11,7 +11,11 @@ import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
-import { getServerData, postServerData } from "../helper/helper";
+import {
+  getServerData,
+  postServerData,
+  deleteAllServerData,
+} from "../helper/helper";
 
 function App() {
   const [addField, setAddField] = useState("");
@@ -32,6 +36,9 @@ function App() {
 
   const deleteAllTasks = () => {
     console.log("click delete all tasks");
+    // need to confirm with user - popup with OK button
+
+    deleteAllServerData("http://localhost:5000/api/todos");
   };
 
   return (
