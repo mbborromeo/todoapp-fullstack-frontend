@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import "./App.css";
 
@@ -24,7 +24,9 @@ import {
 
 function App() {
   const [addField, setAddField] = useState("");
+  const [searchField, setSearchField] = useState("");
   const [openAlert, setOpenAlert] = useState(false);
+  const [toDoList, setToDoList] = useState([]);
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -43,10 +45,24 @@ function App() {
 
   const addToDo = () => {
     if (addField) {
-      // getServerData("http://localhost:5000/api/todos/incomplete");
       postServerData(`http://localhost:5000/api/todos?task=${addField}`);
+      setAddField("");
     }
   };
+
+  const getToDos = useCallback(() => {
+    console.log("getToDos");
+    return getServerData(
+      `http://localhost:5000/api/todos/incomplete?searchTerm=${searchField}`
+    );
+  }, [searchField]);
+
+  useEffect(() => {
+    // fetch API data initially
+    getToDos().then((response) => setToDoList(response));
+
+    console.log("useEffect toDoList", toDoList);
+  }, [getToDos, toDoList]);
 
   return (
     <Box
@@ -158,8 +174,17 @@ function App() {
           <h3>To Do</h3>
           <hr />
           <FormGroup>
-            <FormControlLabel control={<Checkbox />} label="Task 1" />
-            <FormControlLabel control={<Checkbox />} label="Task 2" />
+            {/* <FormControlLabel control={<Checkbox />} label="Task 1" />
+            <FormControlLabel control={<Checkbox />} label="Task 2" /> */}
+            {toDoList &&
+              toDoList.length > 0 &&
+              toDoList.map((item, i) => (
+                <FormControlLabel
+                  key={i}
+                  control={<Checkbox />}
+                  label={item.content}
+                />
+              ))}
           </FormGroup>
         </Box>
 
