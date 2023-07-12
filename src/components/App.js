@@ -44,13 +44,6 @@ function App() {
     deleteAllServerData("http://localhost:5000/api/todos");
   };
 
-  const addToDo = () => {
-    if (addField) {
-      postServerData(`http://localhost:5000/api/todos?task=${addField}`);
-      setAddField("");
-    }
-  };
-
   const getToDos = useCallback(() => {
     console.log("getToDos");
     return getServerData(
@@ -65,13 +58,20 @@ function App() {
     );
   }, [searchField]);
 
-  useEffect(() => {
-    console.log("useEffect toDoList", toDoList);
+  const addToDo = () => {
+    if (addField) {
+      postServerData(`http://localhost:5000/api/todos?task=${addField}`);
+      setAddField("");
+      // getDone();
+      // getToDos();
+    }
+  };
 
+  useEffect(() => {
     // fetch API data initially
     getToDos().then((response) => setToDoList(response));
     getDone().then((response) => setDoneList(response));
-  }, [getToDos, toDoList]);
+  }, [getToDos, getDone]); // , toDoList, doneList
 
   return (
     <Box
