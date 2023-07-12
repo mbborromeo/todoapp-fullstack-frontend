@@ -37,6 +37,11 @@ function App() {
     setAddField(text);
   };
 
+  const handleChange = (element) => {
+    console.log("element clicked is:", element);
+    console.log("checkbox _id clicked is:", element.getAttribute("data-id"));
+  };
+
   /* functions to call backend API */
   const deleteAllTasks = () => {
     console.log("click delete all tasks");
@@ -182,7 +187,14 @@ function App() {
               toDoList.map((item, i) => (
                 <FormControlLabel
                   key={i}
-                  control={<Checkbox />}
+                  control={
+                    <Checkbox
+                      onChange={(e) => {
+                        handleChange(e.target);
+                      }}
+                      data-id={item._id}
+                    />
+                  }
                   label={item.content}
                 />
               ))}
@@ -198,7 +210,13 @@ function App() {
               doneList.map((item, i) => (
                 <FormControlLabel
                   key={i}
-                  control={<Checkbox checked />}
+                  control={
+                    <Checkbox
+                      checked
+                      onChange={handleChange}
+                      data-id={item._id}
+                    />
+                  }
                   label={item.content}
                 />
               ))}
