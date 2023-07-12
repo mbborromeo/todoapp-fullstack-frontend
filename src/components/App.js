@@ -37,6 +37,17 @@ function App() {
     setAddField(text);
   };
 
+  const handleChangeCheckbox = (element) => {
+    console.log("element clicked is:", element);
+    console.log("checkbox _id clicked is:", element.getAttribute("data-id"));
+  };
+
+  const handleChangeSearch = (text) => {
+    console.log("handleChangeSearch");
+    // future to do: wait a couple of seconds until user stopped typing
+    setSearchField(text);
+  };
+
   /* functions to call backend API */
   const deleteAllTasks = () => {
     console.log("click delete all tasks");
@@ -155,6 +166,10 @@ function App() {
             id="outlined-basic"
             variant="outlined"
             placeholder="Search..."
+            value={searchField}
+            onChange={(e) => {
+              handleChangeSearch(e.target.value);
+            }}
             sx={{
               ".MuiInputBase-input": {
                 padding: "8px",
@@ -182,7 +197,14 @@ function App() {
               toDoList.map((item, i) => (
                 <FormControlLabel
                   key={i}
-                  control={<Checkbox />}
+                  control={
+                    <Checkbox
+                      onChange={(e) => {
+                        handleChangeCheckbox(e.target);
+                      }}
+                      data-id={item._id}
+                    />
+                  }
                   label={item.content}
                 />
               ))}
@@ -198,7 +220,13 @@ function App() {
               doneList.map((item, i) => (
                 <FormControlLabel
                   key={i}
-                  control={<Checkbox checked />}
+                  control={
+                    <Checkbox
+                      checked
+                      onChange={handleChangeCheckbox}
+                      data-id={item._id}
+                    />
+                  }
                   label={item.content}
                 />
               ))}
