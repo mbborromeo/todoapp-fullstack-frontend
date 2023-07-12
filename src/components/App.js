@@ -10,6 +10,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 import {
   getServerData,
@@ -19,26 +24,28 @@ import {
 
 function App() {
   const [addField, setAddField] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
 
   const handleOnChangeAdd = (text) => {
     setAddField(text);
   };
 
   /* functions to call backend API */
+  const deleteAllTasks = () => {
+    console.log("click delete all tasks");
+    handleCloseAlert();
+    deleteAllServerData("http://localhost:5000/api/todos");
+  };
+
   const addToDo = () => {
     if (addField) {
-      console.log("add to do:", addField, "to back end");
-
       // getServerData("http://localhost:5000/api/todos/incomplete");
       postServerData(`http://localhost:5000/api/todos?task=${addField}`);
     }
-  };
-
-  const deleteAllTasks = () => {
-    console.log("click delete all tasks");
-    // need to confirm with user - popup with OK button
-
-    deleteAllServerData("http://localhost:5000/api/todos");
   };
 
   return (
@@ -58,10 +65,37 @@ function App() {
         }}
       >
         <h1>Marvelous v2.0</h1>
-        <Link component="button" variant="text" onClick={deleteAllTasks}>
+        <Link
+          component="button"
+          variant="text"
+          onClick={() => {
+            setOpenAlert(true);
+          }}
+        >
           Delete all tasks
         </Link>
       </Box>
+
+      <Dialog
+        open={openAlert}
+        onClose={handleCloseAlert}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Delete All Tasks?</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            By clicking on Agree, this will delete all of your tasks in both the
+            To Do and Done columns.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseAlert}>Disagree</Button>
+          <Button onClick={deleteAllTasks} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Container
         fixed
