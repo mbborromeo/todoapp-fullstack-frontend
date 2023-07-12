@@ -11,6 +11,8 @@ import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
+import { getServerData, postServerData } from "../helper/helper";
+
 function App() {
   const [addField, setAddField] = useState("");
 
@@ -21,7 +23,10 @@ function App() {
   /* functions to call backend API */
   const addToDo = () => {
     if (addField) {
-      console.log("click add to do:", addField, "to back end");
+      console.log("add to do:", addField, "to back end");
+
+      // getServerData("http://localhost:5000/api/todos/incomplete");
+      postServerData(`http://localhost:5000/api/todos?task=${addField}`);
     }
   };
 
