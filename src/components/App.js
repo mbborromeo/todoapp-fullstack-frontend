@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import "./App.css";
 
 import TextField from "@mui/material/TextField";
@@ -10,9 +12,17 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
 function App() {
+  const [addField, setAddField] = useState("");
+
+  const handleOnChangeAdd = (text) => {
+    setAddField(text);
+  };
+
   /* functions to call backend API */
   const addToDo = () => {
-    console.log("click add to do");
+    if (addField) {
+      console.log("click add to do:", addField, "to back end");
+    }
   };
 
   const deleteAllTasks = () => {
@@ -61,6 +71,10 @@ function App() {
               ".MuiInputBase-input": {
                 padding: "8px",
               },
+            }}
+            value={addField}
+            onChange={(e) => {
+              handleOnChangeAdd(e.target.value);
             }}
           />
           <Button
