@@ -53,7 +53,9 @@ function App() {
   const deleteAllTasks = () => {
     console.log("click delete all tasks");
     handleCloseAlert();
-    deleteAllServerData("http://localhost:5000/api/todos");
+    deleteAllServerData("http://localhost:5000/api/todos").then(() =>
+      updateLists()
+    );
   };
 
   const addToDo = () => {
