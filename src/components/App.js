@@ -39,8 +39,6 @@ function App() {
   };
 
   const handleChangeCheckbox = (element) => {
-    // console.log("checkbox _id clicked is:", element.getAttribute("data-id"));
-    // console.log("checkbox _id clicked is:", element["data-id"]);
     const taskId = element["_id"];
     putToDo(taskId);
   };
@@ -214,7 +212,6 @@ function App() {
                       onChange={(e) => {
                         handleChangeCheckbox(item);
                       }}
-                      // data-id={item._id}
                     />
                   }
                   label={item.content}
@@ -238,7 +235,6 @@ function App() {
                       onChange={(e) => {
                         handleChangeCheckbox(item);
                       }}
-                      // data-id={item._id}
                     />
                   }
                   label={item.content}
