@@ -1,36 +1,33 @@
 import axios from "axios";
 
-export function postServerData(url) {
-  return axios
-    .post(url)
-    .then(function (response) {
-      console.log("response", response);
-    })
-    .catch(function (error) {
-      console.log("error", error);
-    });
+export async function postServerData(url) {
+  try {
+    const response = await axios.post(url);
+    console.log("getServerData response", response);
+    return response;
+  } catch (error) {
+    console.log("error", error);
+  }
 }
 
-export function putServerData(url) {
-  return axios
-    .put(url)
-    .then(function (response) {
-      console.log("response", response);
-    })
-    .catch(function (error) {
-      console.log("error", error);
-    });
+export async function putServerData(url) {
+  try {
+    const response = await axios.put(url);
+    console.log("getServerData response", response);
+    return response;
+  } catch (error) {
+    console.log("error", error);
+  }
 }
 
-export function deleteAllServerData(url) {
-  return axios
-    .delete(url)
-    .then(function (response) {
-      console.log("response", response);
-    })
-    .catch(function (error) {
-      console.log("error", error);
-    });
+export async function deleteAllServerData(url) {
+  try {
+    const response = await axios.delete(url);
+    console.log("getServerData response", response);
+    return response;
+  } catch (error) {
+    console.log("error", error);
+  }
 }
 
 export async function getServerData(url) {
