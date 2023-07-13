@@ -72,7 +72,9 @@ function App() {
   };
 
   const putToDo = (id) => {
-    putServerData(`http://localhost:5000/api/todos/${id}`).then(updateLists());
+    putServerData(`http://localhost:5000/api/todos/${id}`).then(() =>
+      updateLists()
+    );
   };
 
   const updateLists = useCallback(() => {
