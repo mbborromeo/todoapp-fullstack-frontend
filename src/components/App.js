@@ -50,39 +50,36 @@ function App() {
   };
 
   /* functions to call backend API */
-  const deleteAllTasks = () => {
+  const deleteAllTasks = async () => {
     console.log("click delete all tasks");
     handleCloseAlert();
-    deleteAllServerData("http://localhost:5000/api/todos").then(() =>
-      updateLists()
-    );
+    await deleteAllServerData("http://localhost:5000/api/todos");
+    updateLists();
   };
 
-  const addToDo = () => {
+  const addToDo = async () => {
     if (addField) {
-      postServerData(`http://localhost:5000/api/todos?task=${addField}`).then(
-        () => {
-          setAddField("");
-          updateLists();
-        }
-      );
+      await postServerData(`http://localhost:5000/api/todos?task=${addField}`);
+      updateLists();
+      setAddField("");
     }
   };
 
-  const putToDo = (id) => {
-    putServerData(`http://localhost:5000/api/todos/${id}`).then(() =>
-      updateLists()
-    );
+  const putToDo = async (id) => {
+    await putServerData(`http://localhost:5000/api/todos/${id}`);
+    updateLists();
   };
 
-  const updateLists = useCallback(() => {
-    getServerData(
+  const updateLists = useCallback(async () => {
+    const responseToDos = await getServerData(
       `http://localhost:5000/api/todos/incomplete?searchTerm=${searchField}`
-    ).then((response) => setToDoList(response));
+    );
+    setToDoList(responseToDos);
 
-    getServerData(
+    const responseDone = await getServerData(
       `http://localhost:5000/api/todos/done?searchTerm=${searchField}`
-    ).then((response) => setDoneList(response));
+    );
+    setDoneList(responseDone);
   }, [searchField]);
 
   useEffect(() => {
