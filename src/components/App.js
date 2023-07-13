@@ -41,8 +41,6 @@ function App() {
   const handleChangeCheckbox = (element) => {
     // console.log("checkbox _id clicked is:", element.getAttribute("data-id"));
     // console.log("checkbox _id clicked is:", element["data-id"]);
-    console.log("checkbox _id clicked is:", element["_id"]);
-
     const taskId = element["_id"];
     putToDo(taskId);
   };
@@ -210,13 +208,13 @@ function App() {
               toDoList.length > 0 &&
               toDoList.map((item, i) => (
                 <FormControlLabel
-                  key={i}
+                  key={`${i}-${item._id}`}
                   control={
                     <Checkbox
                       onChange={(e) => {
                         handleChangeCheckbox(item);
                       }}
-                      data-id={item._id}
+                      // data-id={item._id}
                     />
                   }
                   label={item.content}
@@ -233,14 +231,14 @@ function App() {
               doneList.length > 0 &&
               doneList.map((item, i) => (
                 <FormControlLabel
-                  key={i}
+                  key={`${i}-${item._id}`}
                   control={
                     <Checkbox
                       checked
                       onChange={(e) => {
                         handleChangeCheckbox(item);
                       }}
-                      data-id={item._id}
+                      // data-id={item._id}
                     />
                   }
                   label={item.content}
