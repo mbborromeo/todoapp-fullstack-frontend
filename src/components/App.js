@@ -208,7 +208,7 @@ function App() {
               toDoList.length > 0 &&
               toDoList.map((item, i) => (
                 <FormControlLabel
-                  key={`${i}-${item._id}`}
+                  key={item._id}
                   control={
                     <Checkbox
                       onChange={(e) => {
@@ -230,7 +230,7 @@ function App() {
               doneList.length > 0 &&
               doneList.map((item, i) => (
                 <FormControlLabel
-                  key={`${i}-${item._id}`}
+                  key={item._id}
                   control={
                     <Checkbox
                       checked
