@@ -164,6 +164,11 @@ function App() {
             onChange={(e) => {
               handleOnChangeAdd(e.target.value);
             }}
+            onKeyPress={(ev) => {
+              if (ev.key === "Enter") {
+                addToDo();
+              }
+            }}
           />
           <Button
             variant="contained"
