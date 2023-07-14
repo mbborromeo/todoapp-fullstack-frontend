@@ -54,51 +54,60 @@ function App() {
   };
 
   /* functions to call backend API */
-  const deleteAllTasks = () => {
+  const deleteAllTasks = async () => {
     handleCloseAlert();
 
-    deleteAllServerData("http://localhost:5000/api/todos")
-      .then(() => {
-        updateLists();
-      })
-      .catch(handleServerError);
-  };
-
-  const addToDo = () => {
-    if (addField) {
-      postServerData(`http://localhost:5000/api/todos?task=${addField}`)
-        .then(() => {
-          updateLists();
-          setAddField("");
-        })
-        .catch(handleServerError);
+    try {
+      await deleteAllServerData("http://localhost:5000/api/todos");
+      updateLists();
+    } catch (error) {
+      handleServerError(error);
     }
   };
 
-  const putToDo = (id) => {
-    putServerData(`http://localhost:5000/api/todos/${id}`)
-      .then(() => {
+  const addToDo = async () => {
+    if (addField) {
+      try {
+        await postServerData(
+          `http://localhost:5000/api/todos?task=${addField}`
+        );
+        setAddField("");
         updateLists();
-      })
-      .catch(handleServerError);
+      } catch (error) {
+        handleServerError(error);
+      }
+    }
   };
 
-  const updateLists = useCallback(() => {
-    getServerData(
-      `http://localhost:5000/api/todos/incomplete?searchTerm=${searchField}`
-    )
-      .then((responseToDos) => {
-        setToDoList(responseToDos);
-      })
-      .catch(handleServerError);
+  const putToDo = async (id) => {
+    try {
+      await putServerData(`http://localhost:5000/api/todos/${id}`);
+      updateLists();
+    } catch (error) {
+      handleServerError(error);
+    }
+  };
 
-    getServerData(
-      `http://localhost:5000/api/todos/done?searchTerm=${searchField}`
-    )
-      .then((responseDone) => {
-        setDoneList(responseDone);
-      })
-      .catch(handleServerError);
+  const updateLists = useCallback(async () => {
+    try {
+      const responseToDos = await getServerData(
+        `http://localhost:5000/api/todos/incomplete?searchTerm=${searchField}`
+      );
+
+      setToDoList(responseToDos);
+    } catch (error) {
+      handleServerError(error);
+    }
+
+    try {
+      const responseDone = await getServerData(
+        `http://localhost:5000/api/todos/done?searchTerm=${searchField}`
+      );
+
+      setDoneList(responseDone);
+    } catch (error) {
+      handleServerError(error);
+    }
   }, [searchField]);
 
   useEffect(() => {
