@@ -37,12 +37,8 @@ export async function getServerData(url) {
   try {
     const response = await axios.get(url);
     console.log("response", response);
-    // if (response.status !== 200) {
-    //   throw new Error(`Error! status: ${response.status}`);
-    // }
 
     const data = await response.data;
-    console.log("getServerData data", data);
     return data;
   } catch (error) {
     console.log("getServerData error", error);

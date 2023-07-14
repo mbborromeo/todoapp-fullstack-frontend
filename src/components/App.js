@@ -54,10 +54,12 @@ function App() {
     console.log("App.js: handleServerError:", err);
 
     if (err.code === "ERR_NETWORK") {
+      // handle this error and display feedback to user
       setServerError(true);
+    } else {
+      // pass error forward
+      throw err;
     }
-
-    throw err; // throw new Error(err);
   };
 
   /* functions to call backend API */
