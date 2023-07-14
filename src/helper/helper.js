@@ -42,7 +42,6 @@ export async function getServerData(url) {
     return data;
   } catch (error) {
     console.log("getServerData error", error);
-    console.log("type of error is:", typeof error);
     throw error;
   }
 }

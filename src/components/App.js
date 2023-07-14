@@ -53,7 +53,7 @@ function App() {
   const handleServerError = (err) => {
     console.log("App.js: handleServerError:", err);
 
-    if (err.code === "ERR_NETWORK") {
+    if (err.name === "AxiosError") {
       // handle this error and display feedback to user
       setServerError(true);
     } else {
