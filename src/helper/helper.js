@@ -6,7 +6,8 @@ export async function postServerData(url) {
     console.log("getServerData response", response);
     return response;
   } catch (error) {
-    console.log("error", error);
+    console.log("postServerData error", error);
+    throw error;
   }
 }
 
@@ -16,7 +17,8 @@ export async function putServerData(url) {
     console.log("getServerData response", response);
     return response;
   } catch (error) {
-    console.log("error", error);
+    console.log("putServerData error", error);
+    throw error;
   }
 }
 
@@ -26,16 +28,25 @@ export async function deleteAllServerData(url) {
     console.log("getServerData response", response);
     return response;
   } catch (error) {
-    console.log("error", error);
+    console.log("deleteAllServerData error", error);
+    throw error;
   }
 }
 
 export async function getServerData(url) {
   try {
-    const data = await (await axios.get(url)).data;
+    const response = await axios.get(url);
+    console.log("response", response);
+    // if (response.status !== 200) {
+    //   throw new Error(`Error! status: ${response.status}`);
+    // }
+
+    const data = await response.data;
     console.log("getServerData data", data);
     return data;
   } catch (error) {
-    console.log("error", error);
+    console.log("getServerData error", error);
+    console.log("type of error is:", typeof error);
+    throw error;
   }
 }
