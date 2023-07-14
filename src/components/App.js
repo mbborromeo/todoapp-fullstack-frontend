@@ -49,37 +49,56 @@ function App() {
     setSearchField(text);
   };
 
-  /* functions to call backend API */
-  const deleteAllTasks = async () => {
-    console.log("click delete all tasks");
-    handleCloseAlert();
-    await deleteAllServerData("http://localhost:5000/api/todos");
-    updateLists();
+  const handleServerError = (err) => {
+    console.log("Server error:", err);
   };
 
-  const addToDo = async () => {
+  /* functions to call backend API */
+  const deleteAllTasks = () => {
+    handleCloseAlert();
+
+    deleteAllServerData("http://localhost:5000/api/todos")
+      .then(() => {
+        updateLists();
+      })
+      .catch(handleServerError);
+  };
+
+  const addToDo = () => {
     if (addField) {
-      await postServerData(`http://localhost:5000/api/todos?task=${addField}`);
-      updateLists();
-      setAddField("");
+      postServerData(`http://localhost:5000/api/todos?task=${addField}`)
+        .then(() => {
+          updateLists();
+          setAddField("");
+        })
+        .catch(handleServerError);
     }
   };
 
-  const putToDo = async (id) => {
-    await putServerData(`http://localhost:5000/api/todos/${id}`);
-    updateLists();
+  const putToDo = (id) => {
+    putServerData(`http://localhost:5000/api/todos/${id}`)
+      .then(() => {
+        updateLists();
+      })
+      .catch(handleServerError);
   };
 
-  const updateLists = useCallback(async () => {
-    const responseToDos = await getServerData(
+  const updateLists = useCallback(() => {
+    getServerData(
       `http://localhost:5000/api/todos/incomplete?searchTerm=${searchField}`
-    );
-    setToDoList(responseToDos);
+    )
+      .then((responseToDos) => {
+        setToDoList(responseToDos);
+      })
+      .catch(handleServerError);
 
-    const responseDone = await getServerData(
+    getServerData(
       `http://localhost:5000/api/todos/done?searchTerm=${searchField}`
-    );
-    setDoneList(responseDone);
+    )
+      .then((responseDone) => {
+        setDoneList(responseDone);
+      })
+      .catch(handleServerError);
   }, [searchField]);
 
   useEffect(() => {
