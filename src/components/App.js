@@ -57,7 +57,7 @@ function App() {
       // handle this error and display feedback to user
       setServerError(true);
     } else {
-      // pass error forward
+      // pass error forward so we have more details
       throw err;
     }
   };
