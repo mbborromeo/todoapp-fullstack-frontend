@@ -68,6 +68,8 @@ function App() {
 
     try {
       await deleteAllServerData("http://localhost:5000/api/todos");
+      // success, so no server error
+      setServerError(false);
       updateLists();
     } catch (error) {
       handleServerError(error);
@@ -80,6 +82,8 @@ function App() {
         await postServerData(
           `http://localhost:5000/api/todos?task=${addField}`
         );
+        // success, so no server error
+        setServerError(false);
         setAddField("");
         updateLists();
       } catch (error) {
@@ -91,6 +95,8 @@ function App() {
   const putToDo = async (id) => {
     try {
       await putServerData(`http://localhost:5000/api/todos/${id}`);
+      // success, so no server error
+      setServerError(false);
       updateLists();
     } catch (error) {
       handleServerError(error);
@@ -98,11 +104,14 @@ function App() {
   };
 
   const updateLists = useCallback(async () => {
+    // Promise.resolve: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve#examples
+
     try {
       const responseToDos = await getServerData(
         `http://localhost:5000/api/todos/incomplete?searchTerm=${searchField}`
       );
-
+      // success, so no server error
+      setServerError(false);
       setToDoList(responseToDos);
     } catch (error) {
       handleServerError(error);
@@ -112,7 +121,8 @@ function App() {
       const responseDone = await getServerData(
         `http://localhost:5000/api/todos/done?searchTerm=${searchField}`
       );
-
+      // success, so no server error
+      setServerError(false);
       setDoneList(responseDone);
     } catch (error) {
       handleServerError(error);
