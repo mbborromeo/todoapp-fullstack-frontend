@@ -1,44 +1,47 @@
 import axios from "axios";
 
-export function postServerData(url) {
-  return axios
-    .post(url)
-    .then(function (response) {
-      console.log("response", response);
-    })
-    .catch(function (error) {
-      console.log("error", error);
-    });
+export async function postServerData(url) {
+  try {
+    const response = await axios.post(url);
+    console.log("getServerData response", response);
+    return response;
+  } catch (error) {
+    console.log("postServerData error", error);
+    throw error;
+  }
 }
 
-export function putServerData(url) {
-  return axios
-    .put(url)
-    .then(function (response) {
-      console.log("response", response);
-    })
-    .catch(function (error) {
-      console.log("error", error);
-    });
+export async function putServerData(url) {
+  try {
+    const response = await axios.put(url);
+    console.log("getServerData response", response);
+    return response;
+  } catch (error) {
+    console.log("putServerData error", error);
+    throw error;
+  }
 }
 
-export function deleteAllServerData(url) {
-  return axios
-    .delete(url)
-    .then(function (response) {
-      console.log("response", response);
-    })
-    .catch(function (error) {
-      console.log("error", error);
-    });
+export async function deleteAllServerData(url) {
+  try {
+    const response = await axios.delete(url);
+    console.log("getServerData response", response);
+    return response;
+  } catch (error) {
+    console.log("deleteAllServerData error", error);
+    throw error;
+  }
 }
 
 export async function getServerData(url) {
   try {
-    const data = await (await axios.get(url)).data;
-    console.log("getServerData data", data);
+    const response = await axios.get(url);
+    console.log("response", response);
+
+    const data = await response.data;
     return data;
   } catch (error) {
-    console.log("error", error);
+    console.log("getServerData error", error);
+    throw error;
   }
 }
