@@ -41,7 +41,13 @@ function App() {
 
   const handleChangeCheckbox = (element) => {
     const taskId = element["_id"];
-    putToDo(taskId);
+    const doneAt = element["doneAt"];
+
+    if (doneAt) {
+      putToDoIncomplete(taskId);
+    } else {
+      putToDoDone(taskId);
+    }
   };
 
   const handleChangeSearch = (text) => {
@@ -92,9 +98,32 @@ function App() {
     }
   };
 
+  /*
   const putToDo = async (id) => {
     try {
       await putServerData(`http://localhost:5000/api/todos/${id}`);
+      // success, so no server error
+      setServerError(false);
+      updateLists();
+    } catch (error) {
+      handleServerError(error);
+    }
+  };
+  */
+  const putToDoDone = async (id) => {
+    try {
+      await putServerData(`http://localhost:5000/api/todos/${id}/done`);
+      // success, so no server error
+      setServerError(false);
+      updateLists();
+    } catch (error) {
+      handleServerError(error);
+    }
+  };
+
+  const putToDoIncomplete = async (id) => {
+    try {
+      await putServerData(`http://localhost:5000/api/todos/${id}/incomplete`);
       // success, so no server error
       setServerError(false);
       updateLists();
