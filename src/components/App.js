@@ -98,18 +98,6 @@ function App() {
     }
   };
 
-  /*
-  const putToDo = async (id) => {
-    try {
-      await putServerData(`http://localhost:5000/api/todos/${id}`);
-      // success, so no server error
-      setServerError(false);
-      updateLists();
-    } catch (error) {
-      handleServerError(error);
-    }
-  };
-  */
   const putToDoDone = async (id) => {
     try {
       await putServerData(`http://localhost:5000/api/todos/${id}/done`);
