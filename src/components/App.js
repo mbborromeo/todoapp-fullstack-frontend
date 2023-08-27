@@ -39,11 +39,13 @@ function App() {
     setAddField(text);
   };
 
-  const handleChangeCheckbox = (element) => {
+  const handleChangeCheckbox = (element, ev) => {
     const taskId = element["_id"];
-    const doneAt = element["doneAt"];
+    const done = element["doneAt"];
+    // const done = ev.target.checked;
+    console.log("done", done);
 
-    if (doneAt) {
+    if (done) {
       putToDoIncomplete(taskId);
     } else {
       putToDoDone(taskId);
@@ -281,7 +283,7 @@ function App() {
                     control={
                       <Checkbox
                         onChange={(e) => {
-                          handleChangeCheckbox(item);
+                          handleChangeCheckbox(item, e);
                         }}
                       />
                     }
@@ -304,7 +306,7 @@ function App() {
                       <Checkbox
                         checked
                         onChange={(e) => {
-                          handleChangeCheckbox(item);
+                          handleChangeCheckbox(item, e);
                         }}
                       />
                     }
