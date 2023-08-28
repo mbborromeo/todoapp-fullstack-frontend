@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
@@ -15,6 +14,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+
+import ControlledCheckbox from "./ControlledCheckbox";
 
 import {
   getServerData,
@@ -37,23 +38,6 @@ function App() {
 
   const handleOnChangeAdd = (text) => {
     setAddField(text);
-  };
-
-  const ControlledCheckbox = ({
-    onChangeHandler,
-    item,
-    defaultChecked = false,
-  }) => {
-    const [checked, setChecked] = useState(defaultChecked);
-
-    return (
-      <Checkbox
-        checked={checked}
-        onChange={(e) => {
-          onChangeHandler(item, e, setChecked, checked);
-        }}
-      />
-    );
   };
 
   const handleChangeCheckbox = (element, ev, toggleCheck, done) => {
