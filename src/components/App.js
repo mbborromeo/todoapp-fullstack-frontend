@@ -39,17 +39,36 @@ function App() {
     setAddField(text);
   };
 
-  const handleChangeCheckbox = (element, ev) => {
+  const ControlledCheckbox = ({
+    onChangeHandler,
+    item,
+    defaultChecked = false,
+  }) => {
+    const [checked, setChecked] = useState(defaultChecked);
+
+    return (
+      <Checkbox
+        checked={checked}
+        onChange={(e) => {
+          onChangeHandler(item, e, setChecked, checked);
+        }}
+      />
+    );
+  };
+
+  const handleChangeCheckbox = (element, ev, toggleCheck, done) => {
     const taskId = element["_id"];
-    const done = element["doneAt"];
+    // const done = element["doneAt"];
     // const done = ev.target.checked;
-    console.log("done", done);
+    console.log("handleChangeCheckbox done=", done);
 
     if (done) {
       putToDoIncomplete(taskId);
     } else {
       putToDoDone(taskId);
     }
+
+    toggleCheck(!done);
   };
 
   const handleChangeSearch = (text) => {
@@ -281,10 +300,9 @@ function App() {
                   <FormControlLabel
                     key={item._id}
                     control={
-                      <Checkbox
-                        onChange={(e) => {
-                          handleChangeCheckbox(item, e);
-                        }}
+                      <ControlledCheckbox
+                        onChangeHandler={handleChangeCheckbox}
+                        item={item}
                       />
                     }
                     label={item.content}
@@ -303,11 +321,10 @@ function App() {
                   <FormControlLabel
                     key={item._id}
                     control={
-                      <Checkbox
-                        checked
-                        onChange={(e) => {
-                          handleChangeCheckbox(item, e);
-                        }}
+                      <ControlledCheckbox
+                        defaultChecked={true}
+                        onChangeHandler={handleChangeCheckbox}
+                        item={item}
                       />
                     }
                     label={item.content}
