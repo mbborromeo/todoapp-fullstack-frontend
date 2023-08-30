@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 import "./App.css";
 
@@ -15,7 +15,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-import ControlledCheckbox from "./ControlledCheckbox";
+import Checkbox from "@mui/material/Checkbox";
+// import ControlledCheckbox from "./ControlledCheckbox";
 
 import {
   getServerData,
@@ -40,10 +41,8 @@ function App() {
     setAddField(text);
   };
 
-  const handleChangeCheckbox = (element, ev, toggleCheck, done) => {
+  const handleChangeCheckbox = (element, done) => {
     const taskId = element["_id"];
-    // const done = element["doneAt"];
-    // const done = ev.target.checked;
     console.log("handleChangeCheckbox done=", done);
 
     if (done) {
@@ -52,7 +51,7 @@ function App() {
       putToDoDone(taskId);
     }
 
-    toggleCheck(!done);
+    // toggleCheck(!done);
   };
 
   const handleChangeSearch = (text) => {
@@ -284,9 +283,12 @@ function App() {
                   <FormControlLabel
                     key={item._id}
                     control={
-                      <ControlledCheckbox
-                        onChangeHandler={handleChangeCheckbox}
-                        item={item}
+                      <Checkbox
+                        id={`checkbox-${item._id}`}
+                        defaultChecked={false}
+                        onChange={(e) => {
+                          handleChangeCheckbox(item, e.target.checked);
+                        }}
                       />
                     }
                     label={item.content}
@@ -305,10 +307,12 @@ function App() {
                   <FormControlLabel
                     key={item._id}
                     control={
-                      <ControlledCheckbox
+                      <Checkbox
+                        id={`checkbox-${item._id}`}
                         defaultChecked={true}
-                        onChangeHandler={handleChangeCheckbox}
-                        item={item}
+                        onChange={(e) => {
+                          handleChangeCheckbox(item, e.target.checked);
+                        }}
                       />
                     }
                     label={item.content}
