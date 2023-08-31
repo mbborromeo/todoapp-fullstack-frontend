@@ -16,8 +16,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-// import ControlledCheckbox from "./ControlledCheckbox";
-
 import {
   getServerData,
   postServerData,
@@ -42,16 +40,14 @@ function App() {
   };
 
   const handleChangeCheckbox = (element, done) => {
+    // done status is after click
     const taskId = element["_id"];
-    console.log("handleChangeCheckbox done=", done);
 
     if (done) {
-      putToDoIncomplete(taskId);
-    } else {
       putToDoDone(taskId);
+    } else {
+      putToDoIncomplete(taskId);
     }
-
-    // toggleCheck(!done);
   };
 
   const handleChangeSearch = (text) => {
