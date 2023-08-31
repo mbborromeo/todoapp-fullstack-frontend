@@ -302,7 +302,7 @@ function App() {
                     control={
                       <Checkbox
                         id={`checkbox-${item._id}`}
-                        defaultChecked={true}
+                        defaultChecked
                         onChange={(e) => {
                           handleChangeCheckbox(item, e.target.checked);
                         }}
