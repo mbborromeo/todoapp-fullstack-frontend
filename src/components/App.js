@@ -99,7 +99,7 @@ function App() {
 
   const handleChangeCheckbox = (element, done) => {
     // done status is after click
-    const taskId = element["_id"];
+    const taskId = element._id;
 
     if (done) {
       putToDoDone(taskId);
