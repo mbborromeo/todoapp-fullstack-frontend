@@ -39,16 +39,14 @@ function App() {
     setAddField(text);
   };
 
-  const handleChangeCheckbox = (element, ev) => {
+  const handleChangeCheckbox = (element, done) => {
+    // done status is after click
     const taskId = element["_id"];
-    const done = element["doneAt"];
-    // const done = ev.target.checked;
-    console.log("done", done);
 
     if (done) {
-      putToDoIncomplete(taskId);
-    } else {
       putToDoDone(taskId);
+    } else {
+      putToDoIncomplete(taskId);
     }
   };
 
@@ -282,8 +280,10 @@ function App() {
                     key={item._id}
                     control={
                       <Checkbox
+                        id={`checkbox-${item._id}`}
+                        defaultChecked={false}
                         onChange={(e) => {
-                          handleChangeCheckbox(item, e);
+                          handleChangeCheckbox(item, e.target.checked);
                         }}
                       />
                     }
@@ -304,9 +304,10 @@ function App() {
                     key={item._id}
                     control={
                       <Checkbox
-                        checked
+                        id={`checkbox-${item._id}`}
+                        defaultChecked={true}
                         onChange={(e) => {
-                          handleChangeCheckbox(item, e);
+                          handleChangeCheckbox(item, e.target.checked);
                         }}
                       />
                     }
