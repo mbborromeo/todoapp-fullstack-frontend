@@ -39,6 +39,64 @@ function App() {
     setAddField(text);
   };
 
+  const handleServerError = (err) => {
+    if (err.name === "AxiosError") {
+      // handle this error and display feedback to user
+      setServerError(true);
+    } else {
+      // pass error forward so we have more details
+      throw err;
+    }
+  };
+
+  const updateLists = useCallback(async () => {
+    // Promise.resolve: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve#examples
+
+    try {
+      const responseToDos = await getServerData(
+        `http://localhost:5000/api/todos/incomplete?searchTerm=${searchField}`
+      );
+      // success, so no server error
+      setServerError(false);
+      setToDoList(responseToDos);
+    } catch (error) {
+      handleServerError(error);
+    }
+
+    try {
+      const responseDone = await getServerData(
+        `http://localhost:5000/api/todos/done?searchTerm=${searchField}`
+      );
+      // success, so no server error
+      setServerError(false);
+      setDoneList(responseDone);
+    } catch (error) {
+      handleServerError(error);
+    }
+  }, [searchField]);
+
+  const putToDoDone = async (id) => {
+    try {
+      await putServerData(`http://localhost:5000/api/todos/${id}/done`);
+      // success, so no server error
+      setServerError(false);
+      updateLists();
+    } catch (error) {
+      handleServerError(error);
+    }
+  };
+
+  const putToDoIncomplete = async (id) => {
+    try {
+      await putServerData(`http://localhost:5000/api/todos/${id}/incomplete`);
+      // success, so no server error
+      setServerError(false);
+      updateLists();
+    } catch (error) {
+      handleServerError(error);
+    }
+  };
+
   const handleChangeCheckbox = (element, done) => {
     // done status is after click
     const taskId = element["_id"];
@@ -51,21 +109,8 @@ function App() {
   };
 
   const handleChangeSearch = (text) => {
-    console.log("handleChangeSearch");
     // future to do: wait a couple of seconds until user stopped typing
     setSearchField(text);
-  };
-
-  const handleServerError = (err) => {
-    console.log("App.js: handleServerError:", err);
-
-    if (err.name === "AxiosError") {
-      // handle this error and display feedback to user
-      setServerError(true);
-    } else {
-      // pass error forward so we have more details
-      throw err;
-    }
   };
 
   /* functions to call backend API */
@@ -97,54 +142,6 @@ function App() {
       }
     }
   };
-
-  const putToDoDone = async (id) => {
-    try {
-      await putServerData(`http://localhost:5000/api/todos/${id}/done`);
-      // success, so no server error
-      setServerError(false);
-      updateLists();
-    } catch (error) {
-      handleServerError(error);
-    }
-  };
-
-  const putToDoIncomplete = async (id) => {
-    try {
-      await putServerData(`http://localhost:5000/api/todos/${id}/incomplete`);
-      // success, so no server error
-      setServerError(false);
-      updateLists();
-    } catch (error) {
-      handleServerError(error);
-    }
-  };
-
-  const updateLists = useCallback(async () => {
-    // Promise.resolve: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve#examples
-
-    try {
-      const responseToDos = await getServerData(
-        `http://localhost:5000/api/todos/incomplete?searchTerm=${searchField}`
-      );
-      // success, so no server error
-      setServerError(false);
-      setToDoList(responseToDos);
-    } catch (error) {
-      handleServerError(error);
-    }
-
-    try {
-      const responseDone = await getServerData(
-        `http://localhost:5000/api/todos/done?searchTerm=${searchField}`
-      );
-      // success, so no server error
-      setServerError(false);
-      setDoneList(responseDone);
-    } catch (error) {
-      handleServerError(error);
-    }
-  }, [searchField]);
 
   useEffect(() => {
     // fetch API data initially
