@@ -272,7 +272,7 @@ function App() {
             <FormGroup>
               {toDoList &&
                 toDoList.length > 0 &&
-                toDoList.map((item, i) => (
+                toDoList.map((item) => (
                   <FormControlLabel
                     key={item._id}
                     control={
