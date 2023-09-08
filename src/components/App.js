@@ -4,9 +4,6 @@ import "./App.css";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
@@ -14,6 +11,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+
+import List from "./List";
 
 import {
   getServerData,
@@ -264,53 +263,19 @@ function App() {
             justifyContent: "space-between",
           }}
         >
-          <Box component="div" sx={{ width: "47%" }}>
-            <h3>To Do</h3>
-            <hr />
-            <FormGroup>
-              {toDoList &&
-                toDoList.length > 0 &&
-                toDoList.map((item) => (
-                  <FormControlLabel
-                    key={item._id}
-                    control={
-                      <Checkbox
-                        id={`checkbox-${item._id}`}
-                        defaultChecked={false}
-                        onChange={(e) => {
-                          handleChangeCheckbox(item, e.target.checked);
-                        }}
-                      />
-                    }
-                    label={item.content}
-                  />
-                ))}
-            </FormGroup>
-          </Box>
+          <List
+            heading="To Do"
+            array={toDoList}
+            defaultChecked={false}
+            handleCheck={handleChangeCheckbox}
+          />
 
-          <Box component="div" sx={{ width: "47%" }}>
-            <h3>Done</h3>
-            <hr />
-            <FormGroup>
-              {doneList &&
-                doneList.length > 0 &&
-                doneList.map((item) => (
-                  <FormControlLabel
-                    key={item._id}
-                    control={
-                      <Checkbox
-                        id={`checkbox-${item._id}`}
-                        defaultChecked
-                        onChange={(e) => {
-                          handleChangeCheckbox(item, e.target.checked);
-                        }}
-                      />
-                    }
-                    label={item.content}
-                  />
-                ))}
-            </FormGroup>
-          </Box>
+          <List
+            heading="Done"
+            array={doneList}
+            defaultChecked
+            handleCheck={handleChangeCheckbox}
+          />
         </Container>
       )}
     </Box>
