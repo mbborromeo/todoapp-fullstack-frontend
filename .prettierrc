@@ -1,5 +1,4 @@
 {
   "singleQuote": false,
-  "trailingComma": "es5",
-  "no-underscore-dangle": false
+  "trailingComma": "es5"
 }
