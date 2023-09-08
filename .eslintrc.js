@@ -3,7 +3,11 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ["airbnb", "plugin:prettier/recommended"],
+  extends: [
+    "airbnb",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
+  ],
   overrides: [
     {
       env: {
@@ -22,6 +26,7 @@ module.exports = {
   rules: {
     "prettier/prettier": ["error", { endOfLine: "auto" }],
     "linebreak-style": "off",
+    "no-underscore-dangle": "off",
     quotes: "off",
     "react/jsx-filename-extension": [
       1,
@@ -29,5 +34,7 @@ module.exports = {
         extensions: [".js", ".jsx"],
       },
     ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
   },
 };

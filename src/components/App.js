@@ -4,7 +4,6 @@ import "./App.css";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -165,15 +164,14 @@ function App() {
         }}
       >
         <h1>Marvelous v2.0</h1>
-        <Link
-          component="button"
-          variant="text"
+        <Button
+          variant="outlined"
           onClick={() => {
             setOpenAlert(true);
           }}
         >
           Delete all tasks
-        </Link>
+        </Button>
       </Box>
 
       <Dialog
@@ -296,7 +294,7 @@ function App() {
             <FormGroup>
               {doneList &&
                 doneList.length > 0 &&
-                doneList.map((item, i) => (
+                doneList.map((item) => (
                   <FormControlLabel
                     key={item._id}
                     control={
