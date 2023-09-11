@@ -18,6 +18,30 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+## Running Linters
+
+Check ES syntax, React code, and report/fix bugs.
+
+### `npm run lint`
+
+Will report and auto-fix issues
+
+### `npm run lint:check`
+
+Will report issues without auto-fixing
+
+## Prettier Format Checker
+
+Check code format such as single-quotes, comma-dangle, indentation, etc.
+
+### `npm run format`
+
+Will check format and auto-fix issues
+
+### `npm run format:check`
+
+Will check format without auto-fixing
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\

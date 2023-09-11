@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 
-import "./App.css";
-
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
