@@ -31,7 +31,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix --cache --cache-location ./node_modules/.cache/.eslintcache --ext js,jsx ./src",
+    "lint:check": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext js,jsx ./src",
+    "format": "prettier -w \"src/**/*.(js|jsx)\"",
+    "format:check": "prettier -c \"src/**/*.(js|jsx)\""
   },
   "eslintConfig": {
     "extends": [
