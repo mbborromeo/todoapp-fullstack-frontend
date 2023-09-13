@@ -1,10 +1,15 @@
-# todoapp-fullstack-frontend
+# To Do website - Full Stack project - part 2/2 Front End
 
-To Do app - fullstack - front end part
+Split items up into To Do list and Done list. You can add new items to the list, search for items, and delete all items.
 
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+# System Dependencies
+
+Node 16.17.1
+NPM 8.15.0
 
 ## Available Scripts
 
