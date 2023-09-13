@@ -123,7 +123,9 @@ function App() {
     }
   };
 
-  const addToDo = async () => {
+  const onTodoSubmit = async (event) => {
+    event.preventDefault();
+
     if (addField) {
       try {
         await postServerData(
@@ -204,7 +206,7 @@ function App() {
           justifyContent: "space-between",
         }}
       >
-        <div>
+        <form onSubmit={onTodoSubmit}>
           <TextField
             id="outlined-basic"
             variant="outlined"
@@ -217,20 +219,16 @@ function App() {
             onChange={(e) => {
               handleOnChangeAdd(e.target.value);
             }}
-            onKeyPress={(ev) => {
-              if (ev.key === "Enter") {
-                addToDo();
-              }
-            }}
           />
           <Button
+            type="submit"
             variant="contained"
             sx={{ marginLeft: "8px", textTransform: "capitalize" }}
-            onClick={addToDo}
           >
             Add
           </Button>
-        </div>
+        </form>
+
         <div>
           <TextField
             id="outlined-basic"

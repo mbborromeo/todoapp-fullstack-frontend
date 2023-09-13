@@ -8,7 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # System Dependencies
 
-Node 16.17.1
+Node 16.17.1\
 NPM 8.15.0
 
 ## Available Scripts
