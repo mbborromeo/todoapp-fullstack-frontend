@@ -9,7 +9,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 # System Dependencies
 
 Node 16.17.1\
-NPM 8.15.0
+NPM 8.15.0\
+
+You will need your own .env file in the root folder, and define REACT_APP_API_URL,
+eg. ="http://localhost:5000/api", so that it corresponds to correct port number for the backend API call.
 
 ## Available Scripts
 

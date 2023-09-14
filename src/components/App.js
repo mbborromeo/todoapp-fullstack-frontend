@@ -27,6 +27,8 @@ function App() {
   const [doneList, setDoneList] = useState([]);
   const [serverError, setServerError] = useState(false);
 
+  const apiBaseUrl = process.env.REACT_APP_API_URL;
+
   const handleCloseAlert = () => {
     setOpenAlert(false);
   };
@@ -50,7 +52,7 @@ function App() {
 
     try {
       const responseToDos = await getServerData(
-        `http://localhost:5000/api/todos/incomplete?searchTerm=${searchField}`
+        `${apiBaseUrl}/todos/incomplete?searchTerm=${searchField}`
       );
       // success, so no server error
       setServerError(false);
@@ -61,7 +63,7 @@ function App() {
 
     try {
       const responseDone = await getServerData(
-        `http://localhost:5000/api/todos/done?searchTerm=${searchField}`
+        `${apiBaseUrl}/todos/done?searchTerm=${searchField}`
       );
       // success, so no server error
       setServerError(false);
@@ -69,11 +71,11 @@ function App() {
     } catch (error) {
       handleServerError(error);
     }
-  }, [searchField]);
+  }, [searchField, apiBaseUrl]);
 
   const putToDoDone = async (id) => {
     try {
-      await putServerData(`http://localhost:5000/api/todos/${id}/done`);
+      await putServerData(`${apiBaseUrl}/todos/${id}/done`);
       // success, so no server error
       setServerError(false);
       updateLists();
@@ -84,7 +86,7 @@ function App() {
 
   const putToDoIncomplete = async (id) => {
     try {
-      await putServerData(`http://localhost:5000/api/todos/${id}/incomplete`);
+      await putServerData(`${apiBaseUrl}/todos/${id}/incomplete`);
       // success, so no server error
       setServerError(false);
       updateLists();
@@ -114,7 +116,7 @@ function App() {
     handleCloseAlert();
 
     try {
-      await deleteAllServerData("http://localhost:5000/api/todos");
+      await deleteAllServerData(`${apiBaseUrl}/todos`);
       // success, so no server error
       setServerError(false);
       updateLists();
@@ -128,9 +130,7 @@ function App() {
 
     if (addField) {
       try {
-        await postServerData(
-          `http://localhost:5000/api/todos?task=${addField}`
-        );
+        await postServerData(`${apiBaseUrl}/todos?task=${addField}`);
         // success, so no server error
         setServerError(false);
         setAddField("");
