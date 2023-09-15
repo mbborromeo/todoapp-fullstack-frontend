@@ -14,7 +14,7 @@ import List from "./List";
 
 import {
   getServerData,
-  postServerData,
+  addToDo,
   deleteAllServerData,
   putServerData,
 } from "../helper/helper";
@@ -125,12 +125,12 @@ function App() {
     }
   };
 
-  const onTodoSubmit = async (event) => {
+  const onToDoSubmit = async (event) => {
     event.preventDefault();
 
     if (addField) {
       try {
-        await postServerData(`${apiBaseUrl}/todos?task=${addField}`);
+        await addToDo(addField);
         // success, so no server error
         setServerError(false);
         setAddField("");
@@ -206,7 +206,7 @@ function App() {
           justifyContent: "space-between",
         }}
       >
-        <form onSubmit={onTodoSubmit}>
+        <form onSubmit={onToDoSubmit}>
           <TextField
             id="outlined-basic"
             variant="outlined"

@@ -1,12 +1,14 @@
-import axios from "axios";
+import axios from "axios"; // don't need to use this
 
-export async function postServerData(url) {
-  try {
-    const response = await axios.post(url);
-    return response;
-  } catch (error) {
-    console.log("postServerData error", error);
-    throw error;
+const apiBaseUrl = process.env.REACT_APP_API_URL;
+
+export async function addToDo(text) {
+  const response = await fetch(`${apiBaseUrl}/todos?task=${text}`, {
+    method: "post",
+  });
+
+  if (!response.ok) {
+    throw new Error("Unknown error adding todo");
   }
 }
 
