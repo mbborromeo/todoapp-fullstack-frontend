@@ -1,6 +1,6 @@
-import axios from "axios"; // don't need to use this
+import axios from "axios"; // remove this once you fix get methods
 
-const apiBaseUrl = process.env.REACT_APP_API_URL;
+const apiBaseUrl = process.env.REACT_APP_API_URL; // error on GitHub build
 
 export async function addToDo(text) {
   const response = await fetch(`${apiBaseUrl}/todos?task=${text}`, {
@@ -47,6 +47,7 @@ export async function getIncompleteToDos(searchField) {
     const response = await axios.get(
       `${apiBaseUrl}/todos/incomplete?searchTerm=${searchField}`
     );
+
     const data = await response.data;
     return data;
   } catch (error) {
@@ -84,6 +85,8 @@ export async function getCompletedToDos(searchField) {
   //     method: "get",
   //   }
   // );
+
+  // console.log("getCompletedToDos response", response);
 
   // if (!response.ok) {
   //   throw new Error("Unknown error getting completed todos");
