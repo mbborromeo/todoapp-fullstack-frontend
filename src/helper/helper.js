@@ -22,13 +22,13 @@ export async function putServerData(url) {
   }
 }
 
-export async function deleteAllServerData(url) {
-  try {
-    const response = await axios.delete(url);
-    return response;
-  } catch (error) {
-    console.log("deleteAllServerData error", error);
-    throw error;
+export async function deleteAllToDos() {
+  const response = await fetch(`${apiBaseUrl}/todos`, {
+    method: "delete",
+  });
+
+  if (!response.ok) {
+    throw new Error("Unknown error deleting todos");
   }
 }
 

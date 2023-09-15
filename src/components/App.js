@@ -15,7 +15,7 @@ import List from "./List";
 import {
   getServerData,
   addToDo,
-  deleteAllServerData,
+  deleteAllToDos,
   putServerData,
 } from "../helper/helper";
 
@@ -116,7 +116,7 @@ function App() {
     handleCloseAlert();
 
     try {
-      await deleteAllServerData(`${apiBaseUrl}/todos`);
+      await deleteAllToDos();
       // success, so no server error
       setServerError(false);
       updateLists();
