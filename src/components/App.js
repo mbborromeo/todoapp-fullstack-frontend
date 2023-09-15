@@ -13,10 +13,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import List from "./List";
 
 import {
-  getServerData,
   addToDo,
   deleteAllToDos,
-  putServerData,
+  markToDoComplete,
+  markToDoIncomplete,
+  getCompletedToDos,
+  getIncompleteToDos,
 } from "../helper/helper";
 
 function App() {
@@ -26,8 +28,6 @@ function App() {
   const [toDoList, setToDoList] = useState([]);
   const [doneList, setDoneList] = useState([]);
   const [serverError, setServerError] = useState(false);
-
-  const apiBaseUrl = process.env.REACT_APP_API_URL;
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -49,11 +49,8 @@ function App() {
 
   const updateLists = useCallback(async () => {
     // Promise.resolve: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve#examples
-
     try {
-      const responseToDos = await getServerData(
-        `${apiBaseUrl}/todos/incomplete?searchTerm=${searchField}`
-      );
+      const responseToDos = await getIncompleteToDos(searchField);
       // success, so no server error
       setServerError(false);
       setToDoList(responseToDos);
@@ -62,20 +59,18 @@ function App() {
     }
 
     try {
-      const responseDone = await getServerData(
-        `${apiBaseUrl}/todos/done?searchTerm=${searchField}`
-      );
+      const responseDone = await getCompletedToDos(searchField);
       // success, so no server error
       setServerError(false);
       setDoneList(responseDone);
     } catch (error) {
       handleServerError(error);
     }
-  }, [searchField, apiBaseUrl]);
+  }, [searchField]);
 
   const putToDoDone = async (id) => {
     try {
-      await putServerData(`${apiBaseUrl}/todos/${id}/done`);
+      await markToDoComplete(id);
       // success, so no server error
       setServerError(false);
       updateLists();
@@ -86,7 +81,7 @@ function App() {
 
   const putToDoIncomplete = async (id) => {
     try {
-      await putServerData(`${apiBaseUrl}/todos/${id}/incomplete`);
+      await markToDoIncomplete(id);
       // success, so no server error
       setServerError(false);
       updateLists();
