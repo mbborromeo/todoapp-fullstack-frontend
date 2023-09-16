@@ -1,6 +1,4 @@
-import axios from "axios"; // remove this once you fix get methods
-
-const apiBaseUrl = process.env.REACT_APP_API_URL; // error on GitHub build
+const apiBaseUrl = process.env.REACT_APP_API_URL;
 
 export async function addToDo(text) {
   const response = await fetch(`${apiBaseUrl}/todos?task=${text}`, {
@@ -43,52 +41,39 @@ export async function markToDoIncomplete(id) {
 }
 
 export async function getIncompleteToDos(searchField) {
-  try {
-    const response = await axios.get(
-      `${apiBaseUrl}/todos/incomplete?searchTerm=${searchField}`
-    );
+  const response = await fetch(
+    `${apiBaseUrl}/todos/incomplete?searchTerm=${searchField}`,
+    {
+      method: "get",
+    }
+  );
+  console.log("getIncompleteToDos response", response);
 
-    const data = await response.data;
-    return data;
-  } catch (error) {
-    console.log("getIncompleteToDos error", error);
-    throw error;
+  if (!response.ok) {
+    throw new Error("Unknown error getting incomplete todos");
   }
 
-  // const response = await fetch(
-  //   `${apiBaseUrl}/todos/incomplete?searchTerm=${searchField}`,
-  //   {
-  //     method: "get",
-  //   }
-  // );
+  const responseObj = response.json();
+  console.log("getIncompleteToDos responseObj", responseObj);
 
-  // if (!response.ok) {
-  //   throw new Error("Unknown error getting incomplete todos");
-  // }
+  return responseObj;
 }
 
 export async function getCompletedToDos(searchField) {
-  try {
-    const response = await axios.get(
-      `${apiBaseUrl}/todos/done?searchTerm=${searchField}`
-    );
-    const data = await response.data;
-    return data;
-  } catch (error) {
-    console.log("getCompletedToDos error", error);
-    throw error;
+  const response = await fetch(
+    `${apiBaseUrl}/todos/done?searchTerm=${searchField}`,
+    {
+      method: "get",
+    }
+  );
+  console.log("getCompletedToDos response", response);
+
+  if (!response.ok) {
+    throw new Error("Unknown error getting completed todos");
   }
 
-  // const response = await fetch(
-  //   `${apiBaseUrl}/todos/done?searchTerm=${searchField}`,
-  //   {
-  //     method: "get",
-  //   }
-  // );
+  const responseObj = response.json();
+  console.log("getCompletedToDos responseObj", responseObj);
 
-  // console.log("getCompletedToDos response", response);
-
-  // if (!response.ok) {
-  //   throw new Error("Unknown error getting completed todos");
-  // }
+  return responseObj;
 }
