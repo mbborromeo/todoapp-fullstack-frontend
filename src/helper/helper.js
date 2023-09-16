@@ -47,14 +47,12 @@ export async function getIncompleteToDos(searchField) {
       method: "get",
     }
   );
-  console.log("getIncompleteToDos response", response);
 
   if (!response.ok) {
     throw new Error("Unknown error getting incomplete todos");
   }
 
-  const responseObj = response.json();
-  console.log("getIncompleteToDos responseObj", responseObj);
+  const responseObj = await response.json();
 
   return responseObj;
 }
@@ -66,14 +64,12 @@ export async function getCompletedToDos(searchField) {
       method: "get",
     }
   );
-  console.log("getCompletedToDos response", response);
 
   if (!response.ok) {
     throw new Error("Unknown error getting completed todos");
   }
 
-  const responseObj = response.json();
-  console.log("getCompletedToDos responseObj", responseObj);
+  const responseObj = await response.json();
 
   return responseObj;
 }
