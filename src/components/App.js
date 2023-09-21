@@ -17,8 +17,8 @@ import {
   deleteAllToDos,
   markToDoComplete,
   markToDoIncomplete,
-  getCompletedToDos,
-  getIncompleteToDos,
+  // getCompletedToDos,
+  // getIncompleteToDos,
 } from "../helper/helper";
 
 function App() {
@@ -38,6 +38,7 @@ function App() {
   };
 
   const handleServerError = (err) => {
+    // TO DO: need to change err.name since not using Axios anymore...
     if (err.name === "AxiosError") {
       // handle this error and display feedback to user
       setServerError(true);
@@ -49,23 +50,58 @@ function App() {
 
   const updateLists = useCallback(async () => {
     // Promise.resolve: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve#examples
-    try {
-      const responseToDos = await getIncompleteToDos(searchField);
-      // success, so no server error
-      setServerError(false);
-      setToDoList(responseToDos);
-    } catch (error) {
-      handleServerError(error);
-    }
+    // try {
+    //   const responseToDos = await getIncompleteToDos(searchField);
+    //   // success, so no server error
+    //   setServerError(false);
+    //   setToDoList(responseToDos);
+    // } catch (error) {
+    //   handleServerError(error);
+    // }
 
-    try {
-      const responseDone = await getCompletedToDos(searchField);
-      // success, so no server error
-      setServerError(false);
-      setDoneList(responseDone);
-    } catch (error) {
-      handleServerError(error);
-    }
+    // try {
+    //   const responseDone = await getCompletedToDos(searchField);
+    //   // success, so no server error
+    //   setServerError(false);
+    //   setDoneList(responseDone);
+    // } catch (error) {
+    //   handleServerError(error);
+    // }
+
+    const apiBaseUrl = process.env.REACT_APP_API_URL;
+
+    // https://gomakethings.com/waiting-for-multiple-all-api-responses-to-complete-with-the-vanilla-js-promise.all-method/
+    Promise.all([
+      // getIncompleteToDos(searchField),
+      // getCompletedToDos(searchField),
+      fetch(`${apiBaseUrl}/todos/incomplete?searchTerm=${searchField}`, {
+        method: "get",
+      }),
+      fetch(`${apiBaseUrl}/todos/done?searchTerm=${searchField}`, {
+        method: "get",
+      }),
+    ])
+      .then(function (responses) {
+        console.log("responses", responses);
+        // Get a JSON object from each of the responses
+        return Promise.all(
+          responses.map(async function (response) {
+            return await response.json();
+          })
+        );
+      })
+      .then(function (data) {
+        // Do something with both sets of data here
+        console.log(data);
+        setServerError(false);
+        setToDoList(data[0]);
+        setDoneList(data[1]);
+      })
+      .catch(function (error) {
+        // if there's an error, log it
+        console.log(error);
+        handleServerError(error);
+      });
   }, [searchField]);
 
   const putToDoDone = async (id) => {
