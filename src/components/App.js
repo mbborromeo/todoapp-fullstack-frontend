@@ -49,26 +49,20 @@ function App() {
 
   const updateLists = useCallback(async () => {
     // https://gomakethings.com/waiting-for-multiple-all-api-responses-to-complete-with-the-vanilla-js-promise.all-method/
-    Promise.all([
-      getIncompleteToDos(searchField),
-      getCompletedToDos(searchField),
-    ])
-      .then(function (responses) {
-        // Get a JSON object from each of the responses
-        return Promise.all(
-          responses.map(async function (response) {
-            return await response.json();
-          })
-        );
-      })
-      .then(function (data) {
-        setServerError(false);
-        setToDoList(data[0]);
-        setDoneList(data[1]);
-      })
-      .catch(function (error) {
-        handleServerError(error);
-      });
+    try {
+      const [incompleteToDos, completedToDos] = await Promise.all([
+        getIncompleteToDos(searchField),
+        getCompletedToDos(searchField),
+      ]);
+
+      // if (responsesArray.length > 0) {
+      setServerError(false);
+      setToDoList(incompleteToDos);
+      setDoneList(completedToDos);
+      // }
+    } catch (error) {
+      handleServerError(error);
+    }
   }, [searchField]);
 
   const putToDoDone = async (id) => {
@@ -160,7 +154,7 @@ function App() {
           marginBottom: "30px",
         }}
       >
-        <h1>Marvelous v2.0</h1>
+        <h1>To Do list (Full Stack app)</h1>
         <Button
           variant="outlined"
           onClick={() => {
