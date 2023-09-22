@@ -33,10 +33,6 @@ function App() {
     setOpenAlert(false);
   };
 
-  const handleOnChangeAdd = (text) => {
-    setAddField(text);
-  };
-
   const handleServerError = (err) => {
     if (err) {
       // handle this error and display feedback to user
@@ -47,22 +43,18 @@ function App() {
     }
   };
 
+  /* Functions to call backend API */
   const updateLists = useCallback(async () => {
-    // Promise.resolve: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve#examples
+    // https://gomakethings.com/waiting-for-multiple-all-api-responses-to-complete-with-the-vanilla-js-promise.all-method/
     try {
-      const responseToDos = await getIncompleteToDos(searchField);
-      // success, so no server error
-      setServerError(false);
-      setToDoList(responseToDos);
-    } catch (error) {
-      handleServerError(error);
-    }
+      const [incompleteToDos, completedToDos] = await Promise.all([
+        getIncompleteToDos(searchField),
+        getCompletedToDos(searchField),
+      ]);
 
-    try {
-      const responseDone = await getCompletedToDos(searchField);
-      // success, so no server error
       setServerError(false);
-      setDoneList(responseDone);
+      setToDoList(incompleteToDos);
+      setDoneList(completedToDos);
     } catch (error) {
       handleServerError(error);
     }
@@ -71,7 +63,7 @@ function App() {
   const putToDoDone = async (id) => {
     try {
       await markToDoComplete(id);
-      // success, so no server error
+
       setServerError(false);
       updateLists();
     } catch (error) {
@@ -82,7 +74,7 @@ function App() {
   const putToDoIncomplete = async (id) => {
     try {
       await markToDoIncomplete(id);
-      // success, so no server error
+
       setServerError(false);
       updateLists();
     } catch (error) {
@@ -90,34 +82,38 @@ function App() {
     }
   };
 
-  const handleChangeCheckbox = (element, done) => {
-    // done status is after click
+  const deleteAllTasks = async () => {
+    handleCloseAlert();
+
+    try {
+      await deleteAllToDos();
+
+      setServerError(false);
+      updateLists();
+    } catch (error) {
+      handleServerError(error);
+    }
+  };
+
+  /* Event Handlers for form */
+  const handleChangeCheckboxCompleted = (element, completed) => {
+    // update done (completed) status after user clicks checkbox
     const taskId = element._id;
 
-    if (done) {
+    if (completed) {
       putToDoDone(taskId);
     } else {
       putToDoIncomplete(taskId);
     }
   };
 
-  const handleChangeSearch = (text) => {
-    // future to do: wait a couple of seconds until user stopped typing
-    setSearchField(text);
+  const handleChangeInputAdd = (text) => {
+    setAddField(text);
   };
 
-  /* functions to call backend API */
-  const deleteAllTasks = async () => {
-    handleCloseAlert();
-
-    try {
-      await deleteAllToDos();
-      // success, so no server error
-      setServerError(false);
-      updateLists();
-    } catch (error) {
-      handleServerError(error);
-    }
+  const handleChangeInputSearch = (text) => {
+    // future to do: wait a couple of seconds until user stopped typing
+    setSearchField(text);
   };
 
   const onToDoSubmit = async (event) => {
@@ -126,7 +122,7 @@ function App() {
     if (addField) {
       try {
         await addToDo(addField);
-        // success, so no server error
+
         setServerError(false);
         setAddField("");
         updateLists();
@@ -157,7 +153,7 @@ function App() {
           marginBottom: "30px",
         }}
       >
-        <h1>Marvelous v2.0</h1>
+        <h1>To Do list (Full Stack app)</h1>
         <Button
           variant="outlined"
           onClick={() => {
@@ -212,7 +208,7 @@ function App() {
             }}
             value={addField}
             onChange={(e) => {
-              handleOnChangeAdd(e.target.value);
+              handleChangeInputAdd(e.target.value);
             }}
           />
           <Button
@@ -231,7 +227,7 @@ function App() {
             placeholder="Search..."
             value={searchField}
             onChange={(e) => {
-              handleChangeSearch(e.target.value);
+              handleChangeInputSearch(e.target.value);
             }}
             sx={{
               ".MuiInputBase-input": {
@@ -258,14 +254,14 @@ function App() {
             heading="To Do"
             array={toDoList}
             defaultChecked={false}
-            handleCheck={handleChangeCheckbox}
+            handleCheck={handleChangeCheckboxCompleted}
           />
 
           <List
             heading="Done"
             array={doneList}
             defaultChecked
-            handleCheck={handleChangeCheckbox}
+            handleCheck={handleChangeCheckboxCompleted}
           />
         </Container>
       )}
