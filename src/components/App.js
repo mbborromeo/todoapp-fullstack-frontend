@@ -38,8 +38,7 @@ function App() {
   };
 
   const handleServerError = (err) => {
-    // TO DO: need to change err.name since not using Axios anymore...
-    if (err.name === "AxiosError") {
+    if (err) {
       // handle this error and display feedback to user
       setServerError(true);
     } else {
