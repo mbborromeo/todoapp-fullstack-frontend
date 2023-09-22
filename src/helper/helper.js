@@ -52,9 +52,7 @@ export async function getIncompleteToDos(searchField) {
     throw new Error("Unknown error getting incomplete todos");
   }
 
-  const responseObj = await response.json();
-
-  return responseObj;
+  return response;
 }
 
 export async function getCompletedToDos(searchField) {
@@ -69,7 +67,5 @@ export async function getCompletedToDos(searchField) {
     throw new Error("Unknown error getting completed todos");
   }
 
-  const responseObj = await response.json();
-
-  return responseObj;
+  return response;
 }
