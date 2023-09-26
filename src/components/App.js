@@ -96,11 +96,11 @@ function App() {
   };
 
   /* Event Handlers for form */
-  const handleChangeCheckboxCompleted = (element, completed) => {
-    // update done (completed) status after user clicks checkbox
+  const handleChangeCheckboxCompleted = (element, checked) => {
+    // update done (checked) status after user clicks checkbox
     const taskId = element._id;
 
-    if (completed) {
+    if (checked) {
       putToDoDone(taskId);
     } else {
       putToDoIncomplete(taskId);
