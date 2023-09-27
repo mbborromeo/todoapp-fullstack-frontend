@@ -26,7 +26,8 @@ export async function markToDoComplete(id) {
   });
 
   if (!response.ok) {
-    throw new Error("markToDoComplete error");
+    const responseObj = await response.json();
+    throw new Error(`error thown: ${responseObj.error}`);
   }
 }
 
@@ -36,7 +37,8 @@ export async function markToDoIncomplete(id) {
   });
 
   if (!response.ok) {
-    throw new Error("markToDoIncomplete error");
+    const responseObj = await response.json();
+    throw new Error(`error thown: ${responseObj.error}`);
   }
 }
 
@@ -53,7 +55,6 @@ export async function getIncompleteToDos(searchField) {
   }
 
   const responseObj = await response.json();
-
   return responseObj;
 }
 
@@ -70,6 +71,5 @@ export async function getCompletedToDos(searchField) {
   }
 
   const responseObj = await response.json();
-
   return responseObj;
 }

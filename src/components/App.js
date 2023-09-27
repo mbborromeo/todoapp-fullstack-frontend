@@ -63,10 +63,10 @@ function App() {
   const putToDoDone = async (id) => {
     try {
       await markToDoComplete(id);
-
       setServerError(false);
       updateLists();
     } catch (error) {
+      console.log(error);
       handleServerError(error);
     }
   };
@@ -74,10 +74,10 @@ function App() {
   const putToDoIncomplete = async (id) => {
     try {
       await markToDoIncomplete(id);
-
       setServerError(false);
       updateLists();
     } catch (error) {
+      console.log(error);
       handleServerError(error);
     }
   };
