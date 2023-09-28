@@ -27,7 +27,7 @@ export async function markToDoComplete(id) {
 
   if (!response.ok) {
     const responseObj = await response.json();
-    throw new Error(`error thown: ${responseObj.error}`);
+    throw new Error(`error thrown: ${responseObj.error}`);
   }
 }
 
@@ -38,7 +38,7 @@ export async function markToDoIncomplete(id) {
 
   if (!response.ok) {
     const responseObj = await response.json();
-    throw new Error(`error thown: ${responseObj.error}`);
+    throw new Error(`error thrown: ${responseObj.error}`);
   }
 }
 
