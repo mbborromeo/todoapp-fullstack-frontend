@@ -1,6 +1,6 @@
 # To Do website - Full Stack project - part 2/2 Front End
 
-Split items up into To Do list and Done list. You can add new items to the list, search for items, and delete all items.
+Split items up into To Do list and Done list. You can add new items to the list, search for items, and delete all items. CRUD (create, read, update, delete) functionality is implemented on the Back End of this project [(part 1/2)](https://github.com/mbborromeo/todoapp-fullstack-backend) via REST API calls which perform operations on the Mongo Database.
 
 # Getting Started with Create React App
 
@@ -9,7 +9,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 # System Dependencies
 
 Node 16.17.1\
-NPM 8.15.0\
+NPM 8.15.0
 
 You will need your own .env file in the root folder, and define REACT_APP_API_URL,
 eg. ="http://localhost:5000/api", so that it corresponds to correct port number for the backend API call.
