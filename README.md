@@ -2,7 +2,7 @@
 
 Split items up into To Do list and Done list. You can add new items to the list, search for items, and delete all items. CRUD (create, read, update, delete) functionality is implemented on the Back End of this project [(part 1/2)](https://github.com/mbborromeo/todoapp-fullstack-backend) via REST API calls which perform operations on the Mongo Database.
 
-# Getting Started with Create React App
+# React.js Front End
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
