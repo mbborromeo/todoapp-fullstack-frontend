@@ -18,6 +18,10 @@ eg. ="http://localhost:5000/api", so that it corresponds to correct port number 
 
 In the project directory, you can run:
 
+### `npm install`
+
+This will install the project and system dependencies.
+
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -49,11 +53,6 @@ Will check format and auto-fix issues
 ### `npm run format:check`
 
 Will check format without auto-fixing
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
